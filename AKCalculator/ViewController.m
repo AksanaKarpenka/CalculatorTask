@@ -49,10 +49,10 @@
     NSString *result = [NSString stringWithFormat:@"%@%@", self.displayLabel.text, digit];
     NSString *displayLabelText = self.displayLabel.text;
     
-    if ([displayLabelText rangeOfString:@"."].location == NSNotFound) {
+    if (![displayLabelText containsString:@"."]) {
         self.displayLabel.text = [NSString stringWithFormat:@"%.f",  result.floatValue];
     } else {
-        self.displayLabel.text = [NSString stringWithFormat:@"%@",  result];
+        self.displayLabel.text = result;
     }
 }
 
@@ -69,15 +69,10 @@
     NSString *dot = [sender titleForState:UIControlStateNormal];
     NSString *displayLabelText = self.displayLabel.text;
     
-    if ([displayLabelText rangeOfString:@"."].location == NSNotFound) {
+    if (![displayLabelText containsString:@"."]) {
         NSString *result = [NSString stringWithFormat:@"%@%@", self.displayLabel.text, dot];
-        self.displayLabel.text = [NSString stringWithFormat:@"%@",  result];
+        self.displayLabel.text = result;
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)dealloc {
