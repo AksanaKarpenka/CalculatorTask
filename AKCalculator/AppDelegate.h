@@ -12,6 +12,5 @@
 
 @property (retain, nonatomic) UIWindow *window;
 
-
 @end
 

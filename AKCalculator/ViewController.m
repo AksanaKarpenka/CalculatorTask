@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "AboutViewController.h"
+#import "LicenseViewController.h"
 
 @interface ViewController ()
 
@@ -21,6 +23,11 @@
                                                                                            action:@selector
                                                   (handleSwipeRecognizer:)] autorelease];
     [self.displayLabel addGestureRecognizer:swipeRecognizer];
+    UIBarButtonItem *aboutUsUIBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"О нас"
+                                                                               style:UIBarButtonItemStylePlain
+                                                                              target:self
+                                                                              action:@selector(aboutButtonPressed:)];
+    self.navigationItem.leftBarButtonItem = aboutUsUIBarButtonItem;
 }
 
 /* 
@@ -75,12 +82,27 @@
     }
 }
 
+// open screen containing an author info
+- (IBAction)aboutButtonPressed:(id)sender {
+    AboutViewController *aboutViewController = [[AboutViewController alloc] init];
+    [self.navigationController pushViewController:aboutViewController animated:YES];
+    [aboutViewController release];
+}
+
+// open license info
+- (IBAction)licenseInfoUIButtonPressed:(id)sender {
+    LicenseViewController *licenseViewController = [[LicenseViewController alloc] init];
+    [self presentViewController:licenseViewController animated:YES completion:nil];
+    [licenseViewController release];
+}
+
 - (void)dealloc {
     [_displayLabel release];
     [_digitCollectionButtons release];
     [_clearButton release];
     [_dotButton release];
     [_digitCollectionButtons release];
+    [_licenseInfoUIButton release];
     [super dealloc];
 }
 

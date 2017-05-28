@@ -14,6 +14,7 @@
 @property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *digitCollectionButtons;
 @property (retain, nonatomic) IBOutlet UIButton *clearButton;
 @property (retain, nonatomic) IBOutlet UIButton *dotButton;
+@property (retain, nonatomic) IBOutlet UIButton *licenseInfoUIButton;
 
 @end
 
