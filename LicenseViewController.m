@@ -20,9 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString *fullURL = @"https://ru.wikipedia.org/wiki/";
-    NSString *encodedCharacters = [NSString stringWithFormat:@"%@", [@"Лицензия_MIT" stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", fullURL, encodedCharacters]];
+    NSString *encodedURLPart = [@"Лицензия_MIT" stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://ru.wikipedia.org/wiki/", encodedURLPart]];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [_licenseUIWebView loadRequest:requestObj];
 }
