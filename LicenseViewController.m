@@ -27,7 +27,6 @@
 }
 
 - (void)dealloc {
-    [_closeUIButton release];
     [_licenseUIWebView release];
     [super dealloc];
 }

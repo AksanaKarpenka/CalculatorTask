@@ -10,7 +10,6 @@
 
 @interface LicenseViewController : UIViewController
 
-@property (retain, nonatomic) IBOutlet UIButton *closeUIButton;
 @property (retain, nonatomic) IBOutlet UIWebView *licenseUIWebView;
 
 @end

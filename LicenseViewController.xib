@@ -11,7 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LicenseViewController">
             <connections>
-                <outlet property="closeUIButton" destination="WKB-s2-fqc" id="0g9-FP-iRN"/>
                 <outlet property="licenseUIWebView" destination="Oe7-Uf-mug" id="El7-eN-c62"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

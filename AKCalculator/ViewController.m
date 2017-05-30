@@ -102,7 +102,6 @@
     [_clearButton release];
     [_dotButton release];
     [_digitCollectionButtons release];
-    [_licenseInfoUIButton release];
     [super dealloc];
 }
 

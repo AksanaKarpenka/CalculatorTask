@@ -187,7 +187,6 @@
                         <outlet property="clearButton" destination="2Nx-bj-UC7" id="JiK-Wb-aYF"/>
                         <outlet property="displayLabel" destination="G8n-PX-FLh" id="Nni-fL-Vqh"/>
                         <outlet property="dotButton" destination="DMJ-mH-2y4" id="G1I-oV-C2l"/>
-                        <outlet property="licenseInfoUIButton" destination="HHs-oo-kYX" id="wdl-cK-aQF"/>
                         <outletCollection property="digitCollectionButtons" destination="PbD-aI-1eR" id="kXz-Lh-ugL"/>
                         <outletCollection property="digitCollectionButtons" destination="lY0-VL-I41" id="CcA-Nq-z9a"/>
                         <outletCollection property="digitCollectionButtons" destination="v8J-OE-XCZ" id="cCc-vK-EgH"/>
