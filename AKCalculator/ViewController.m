@@ -44,7 +44,8 @@
     
     if (result.length == 0) {
         self.displayLabel.text = @"0";
-    } else {
+    }
+    else {
         self.displayLabel.text = result;
     }
 }
@@ -63,7 +64,8 @@
     NSString *result;
     if (isTypingNumber) {
         result = [NSString stringWithFormat:@"%@%@", self.displayLabel.text, digit];
-    } else {
+    }
+    else {
         result = [NSString stringWithFormat:@"%@", digit];
         isTypingNumber = YES;
     }
@@ -71,7 +73,8 @@
     
     if (![displayLabelText containsString:@"."]) {
         self.displayLabel.text = [NSString stringWithFormat:@"%.f",  result.floatValue];
-    } else {
+    }
+    else {
         self.displayLabel.text = result;
     }
 }
@@ -79,8 +82,8 @@
 // reset displayLabelText value to @"0"
 - (IBAction)clearButtonTapped:(id)sender {
     self.displayLabel.text = @"0";
-    self.model.curOperation = nil;
-    self.model.prevOperation = nil;
+    self.model.currentOperation = nil;
+    self.model.previousOperation = nil;
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
     self.model.operationCount = 0;
@@ -125,28 +128,30 @@
     if (!self.model.firstOperand) {
         self.model.firstOperand = [self.displayLabel.text floatValue];
     }
-    if (!self.model.curOperation && !self.model.prevOperation) {
-        self.model.curOperation = self.model.prevOperation = [sender currentTitle];
+    if (!self.model.currentOperation && !self.model.previousOperation) {
+        self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
     }
     if (isTypingNumber) {
         isTypingNumber = NO;
         self.model.operationCount++;
-        self.model.curOperation = [sender currentTitle];
+        self.model.currentOperation = [sender currentTitle];
         if (self.model.operationCount == 2) {
             self.model.secondOperand = [self.displayLabel.text floatValue];
             @try {
                 value = [self.model performOperation:self.model.secondOperand];
             } @catch (NSException *exception) {
                 [self showExceptionMessageAndClearData:exception];
+                
                 return;
             }
             self.model.secondOperand = 0;
-            self.model.curOperation = self.model.prevOperation = [sender currentTitle];
+            self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
             self.model.operationCount = 1;
             [self showResult:value];
         }
-    } else {
-        self.model.curOperation = self.model.prevOperation = [sender currentTitle];
+    }
+    else {
+        self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
     }
 }
 
@@ -170,17 +175,19 @@
                 value = [self.model performOperation:[self.displayLabel.text floatValue]];
                 self.model.firstOperand = value;
             }
-            self.model.curOperation = self.model.prevOperation = [sender currentTitle];
+            self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
             value = [self.model performOperation:0];
             self.model.operationCount = 1;
-        } else {
+        }
+        else {
             self.model.firstOperand = [self.displayLabel.text floatValue];
-            self.model.curOperation = self.model.prevOperation = [sender currentTitle];
+            self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
             value = [self.model performOperation:0];
         }
         isTypingNumber = NO;
     } @catch (NSException *exception) {
         [self showExceptionMessageAndClearData:exception];
+        
         return;
     }
     [self showResult:value];
@@ -198,7 +205,8 @@
                 value = [self.model performOperation:self.model.secondOperand];
                 [self showResult:value];
             }
-        } else {
+        }
+        else {
             if (!self.model.secondOperand) {
                 self.model.secondOperand = self.model.firstOperand;
             }
@@ -217,14 +225,15 @@
     [formatDecimal setNumberStyle:NSNumberFormatterDecimalStyle];
     [formatDecimal setMaximumFractionDigits:6];
     self.displayLabel.text = [NSString stringWithFormat:@"%@", [formatDecimal stringFromNumber:@(value)]];
-    SampleProtocol *sampleProtocol = [[SampleProtocol alloc]init];
-    sampleProtocol.delegate = self;
-    [sampleProtocol sampleAction];
+    CalculatorNotificationController *controller = [[CalculatorNotificationController alloc]init];
+    controller.delegate = self;
+    [controller catchResultValueChanges];
+    [controller release];
     [formatDecimal release];
 }
 
 // realization of protocol method
-- (void)resultValueChanged {
+- (void)handleResultValueChanges:(CalculatorNotificationController *)controller {
     NSLog(@"Result was changed.");
 }
 
@@ -234,8 +243,8 @@
     [self switchAvailabilityButton:NO];
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
-    self.model.prevOperation = nil;
-    self.model.curOperation = nil;
+    self.model.previousOperation = nil;
+    self.model.currentOperation = nil;
 }
 
 // open screen containing an author info

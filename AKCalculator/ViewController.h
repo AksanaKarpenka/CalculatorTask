@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CalculatorModel.h"
-#import "SampleProtocol.h"
+#import "CalculatorNotificationController.h"
 
-@interface ViewController : UIViewController<SampleProtocolDelegate>
+@interface ViewController : UIViewController<CalculatorNotificationControllerDelegate>
 {
     BOOL isTypingNumber;
     BOOL isResultButtonClicked;

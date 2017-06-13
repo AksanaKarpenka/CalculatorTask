@@ -21,7 +21,7 @@
 - (CGFloat)performOperation:(CGFloat)operand {
     CGFloat value = self.firstOperand;
     NSArray *operations = @[@"+", @"-", @"*", @"/", @"%", @"\u221A"];
-    switch ([operations indexOfObject:self.prevOperation]) {
+    switch ([operations indexOfObject:self.previousOperation]) {
         case 0:
             value += operand;
             NSLog(@"+ was tapped");
@@ -64,8 +64,8 @@
 }
 
 - (void)dealloc {
-    [_prevOperation release];
-    [_curOperation release];
+    [_previousOperation release];
+    [_currentOperation release];
     [super dealloc];
 }
 

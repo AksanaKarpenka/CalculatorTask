@@ -12,8 +12,8 @@
 
 @property (assign, nonatomic) CGFloat firstOperand;
 @property (assign, nonatomic) CGFloat secondOperand;
-@property (retain, nonatomic) NSString *curOperation;
-@property (retain, nonatomic) NSString *prevOperation;
+@property (retain, nonatomic) NSString *currentOperation;
+@property (retain, nonatomic) NSString *previousOperation;
 @property (assign, nonatomic) int operationCount;
 
 - (CGFloat)performOperation:(CGFloat)operand;
