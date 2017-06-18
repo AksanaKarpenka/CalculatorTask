@@ -29,6 +29,10 @@
 @property (retain, nonatomic) IBOutlet UIButton *modUIButton;
 @property (retain, nonatomic) IBOutlet UIButton *resultUIButton;
 @property (retain, nonatomic) CalculatorModel *model;
+@property (retain, nonatomic) IBOutlet UIStackView *operationsMovableUIStackView;
+@property (retain, nonatomic) IBOutlet UIStackView *centralButtonsBlockUIStackView;
+@property (assign, nonatomic) CGRect operationsMovableUIStackViewFrame;
+@property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *operationsCollectionButtons;
 
 @end
 

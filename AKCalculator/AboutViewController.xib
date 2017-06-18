@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina3_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -17,13 +17,15 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Author: Aksana Karpenka" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KcI-aY-DyJ">
-                    <rect key="frame" x="-1" y="233" width="376" height="200"/>
-                    <autoresizingMask key="autoresizingMask"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author: Aksana Karpenka" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KcI-aY-DyJ">
+                    <rect key="frame" x="0.0" y="110" width="480" height="100"/>
                     <color key="backgroundColor" red="0.87709752651886708" green="0.8275211440925293" blue="0.97680455446243286" alpha="0.50621698943661975" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="fZG-LR-vS8"/>
+                    </constraints>
                     <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="0.0"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                     <color key="textColor" red="0.21303719822308245" green="0.40983241580310881" blue="0.32999558096600229" alpha="0.60505611800000003" colorSpace="custom" customColorSpace="sRGB"/>
@@ -34,9 +36,8 @@
                         <color key="shadowColor" red="0.92778497409326421" green="0.92778497409326421" blue="0.92778497409326421" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="О нас" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAH-Au-asi">
-                    <rect key="frame" x="-1" y="74" width="376" height="39"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="О нас" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAH-Au-asi">
+                    <rect key="frame" x="192.5" y="10" width="95" height="89.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="35"/>
                     <color key="textColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                     <nil key="highlightedColor"/>
@@ -45,6 +46,15 @@
                 </label>
             </subviews>
             <color key="backgroundColor" red="0.77875099523448832" green="0.74148234056500584" blue="0.95471129441624369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="KcI-aY-DyJ" firstAttribute="top" secondItem="wAH-Au-asi" secondAttribute="bottom" constant="10" id="9mY-sA-MmY"/>
+                <constraint firstItem="wAH-Au-asi" firstAttribute="centerX" secondItem="KcI-aY-DyJ" secondAttribute="centerX" id="B4W-9x-3qp"/>
+                <constraint firstAttribute="trailing" secondItem="KcI-aY-DyJ" secondAttribute="trailing" id="XGb-Eg-U7D"/>
+                <constraint firstItem="KcI-aY-DyJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="bT4-vC-72Y"/>
+                <constraint firstItem="KcI-aY-DyJ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="ouL-MP-Le3"/>
+                <constraint firstItem="KcI-aY-DyJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rpB-0Y-hwG"/>
+                <constraint firstItem="wAH-Au-asi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="vgu-wh-jex"/>
+            </constraints>
             <point key="canvasLocation" x="-7.5" y="-320.5"/>
         </view>
     </objects>
