@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vDH-ig-j5h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vDH-ig-j5h">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -281,17 +281,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="eOe-hL-au0"/>
                     <connections>
-                        <outlet property="addUIButton" destination="qEa-0s-Pkd" id="43w-6B-XyZ"/>
                         <outlet property="clearButton" destination="2Nx-bj-UC7" id="JiK-Wb-aYF"/>
                         <outlet property="displayLabel" destination="G8n-PX-FLh" id="Nni-fL-Vqh"/>
-                        <outlet property="divUIButton" destination="Sua-fd-TWX" id="zYs-Xl-2ag"/>
-                        <outlet property="dotButton" destination="DMJ-mH-2y4" id="G1I-oV-C2l"/>
-                        <outlet property="modUIButton" destination="k8e-q0-USf" id="vJ6-Ve-uDF"/>
-                        <outlet property="multUIButton" destination="CBj-GR-wDg" id="04i-7f-u6r"/>
                         <outlet property="plusMinusUIButton" destination="ioP-2H-gmd" id="Cw4-Rq-hTg"/>
-                        <outlet property="resultUIButton" destination="5ci-v8-xGc" id="j56-Tz-F8h"/>
                         <outlet property="sqrtUIButton" destination="wHh-L8-271" id="HmY-W1-QTT"/>
-                        <outlet property="subUIButton" destination="vay-ez-6gJ" id="984-GV-B84"/>
                         <outletCollection property="digitCollectionButtons" destination="Zq8-qa-cwz" id="Sdq-ge-JZy"/>
                         <outletCollection property="digitCollectionButtons" destination="WPp-ac-rvk" id="9SI-5G-Nt4"/>
                         <outletCollection property="digitCollectionButtons" destination="50a-kA-bUf" id="rrD-mh-Sjn"/>

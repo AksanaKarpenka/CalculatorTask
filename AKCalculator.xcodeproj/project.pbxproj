@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9619AA8B1EEFC631001F2EC1 /* CalculatorNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9619AA8A1EEFC631001F2EC1 /* CalculatorNotificationController.m */; };
 		962B6D2C1EE75D0A001B402C /* CalculatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 962B6D2B1EE75D0A001B402C /* CalculatorModel.m */; };
 		9A21DA541ED3807D0013C23C /* LicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A21DA521ED3807D0013C23C /* LicenseViewController.m */; };
 		9A21DA551ED3807D0013C23C /* LicenseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A21DA531ED3807D0013C23C /* LicenseViewController.xib */; };
@@ -19,11 +18,10 @@
 		9ABC8CD01EC86BDF00FB7A08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ABC8CCE1EC86BDF00FB7A08 /* Main.storyboard */; };
 		9ABC8CD21EC86BDF00FB7A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABC8CD11EC86BDF00FB7A08 /* Assets.xcassets */; };
 		9ABC8CD51EC86BDF00FB7A08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ABC8CD31EC86BDF00FB7A08 /* LaunchScreen.storyboard */; };
+		F404C8D31F1BB165008E449B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = F404C8D21F1BB165008E449B /* Constants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9619AA891EEFC631001F2EC1 /* CalculatorNotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalculatorNotificationController.h; path = ../CalculatorNotificationController.h; sourceTree = "<group>"; };
-		9619AA8A1EEFC631001F2EC1 /* CalculatorNotificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalculatorNotificationController.m; path = ../CalculatorNotificationController.m; sourceTree = "<group>"; };
 		962B6D2A1EE75D0A001B402C /* CalculatorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorModel.h; sourceTree = "<group>"; };
 		962B6D2B1EE75D0A001B402C /* CalculatorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorModel.m; sourceTree = "<group>"; };
 		9A21DA511ED3807D0013C23C /* LicenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LicenseViewController.h; path = ../LicenseViewController.h; sourceTree = "<group>"; };
@@ -42,6 +40,8 @@
 		9ABC8CD11EC86BDF00FB7A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9ABC8CD41EC86BDF00FB7A08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9ABC8CD61EC86BDF00FB7A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F404C8D11F1BB165008E449B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		F404C8D21F1BB165008E449B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,12 +74,12 @@
 		9ABC8CC41EC86BDF00FB7A08 /* AKCalculator */ = {
 			isa = PBXGroup;
 			children = (
-				9619AA891EEFC631001F2EC1 /* CalculatorNotificationController.h */,
-				9619AA8A1EEFC631001F2EC1 /* CalculatorNotificationController.m */,
 				9ABC8CC81EC86BDF00FB7A08 /* AppDelegate.h */,
 				9ABC8CC91EC86BDF00FB7A08 /* AppDelegate.m */,
 				9ABC8CCB1EC86BDF00FB7A08 /* ViewController.h */,
 				9ABC8CCC1EC86BDF00FB7A08 /* ViewController.m */,
+				F404C8D11F1BB165008E449B /* Constants.h */,
+				F404C8D21F1BB165008E449B /* Constants.m */,
 				962B6D2A1EE75D0A001B402C /* CalculatorModel.h */,
 				962B6D2B1EE75D0A001B402C /* CalculatorModel.m */,
 				9A21DA511ED3807D0013C23C /* LicenseViewController.h */,
@@ -181,8 +181,8 @@
 				9ABC8CCD1EC86BDF00FB7A08 /* ViewController.m in Sources */,
 				9A21DA541ED3807D0013C23C /* LicenseViewController.m in Sources */,
 				9ABC8CCA1EC86BDF00FB7A08 /* AppDelegate.m in Sources */,
+				F404C8D31F1BB165008E449B /* Constants.m in Sources */,
 				9A655E521ECDB8F0006DC52E /* AboutViewController.m in Sources */,
-				9619AA8B1EEFC631001F2EC1 /* CalculatorNotificationController.m in Sources */,
 				9ABC8CC71EC86BDF00FB7A08 /* main.m in Sources */,
 				962B6D2C1EE75D0A001B402C /* CalculatorModel.m in Sources */,
 			);
