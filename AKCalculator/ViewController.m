@@ -32,9 +32,6 @@
     [self.sqrtUIButton setTitle:@"\u221A" forState:UIControlStateNormal];
     [self.plusMinusUIButton setTitle:@"\u00B1" forState:UIControlStateNormal];
     self.model = [[[CalculatorModel alloc] init] autorelease];
-
-    UIPanGestureRecognizer *panGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGestureRecognizer:)] autorelease];
-    [self.operationsMovableUIStackView addGestureRecognizer:panGestureRecognizer];
 }
 
 /* 
@@ -50,31 +47,6 @@
     }
     else {
         self.displayLabel.text = result;
-    }
-}
-
-// handle PanGestureRecognizer
-- (void)handlePanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer {
-    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        self.operationsMovableUIStackViewFrame = self.operationsMovableUIStackView.frame;
-    }
-    CGPoint translation = [panGestureRecognizer translationInView:self.operationsMovableUIStackView];
-    self.operationsMovableUIStackView.center = CGPointMake(self.operationsMovableUIStackView.center.x + translation.x, self.operationsMovableUIStackView.center.y + translation.y);
-    [panGestureRecognizer setTranslation:CGPointZero inView:self.operationsMovableUIStackView];
-    NSArray *arrangedSubviews = [self.centralButtonsBlockUIStackView arrangedSubviews];
-    if (panGestureRecognizer.state == UIGestureRecognizerStateEnded)
-    {
-        for (UIStackView *stackView in arrangedSubviews) {
-            NSUInteger indexTemp = [arrangedSubviews indexOfObject:stackView];
-            if ([self.operationsMovableUIStackView isEqual:stackView]) {
-                continue;
-            }
-            if (CGRectIntersectsRect(self.operationsMovableUIStackView.frame, stackView.frame)) {
-                [self.centralButtonsBlockUIStackView insertArrangedSubview:self.operationsMovableUIStackView atIndex:indexTemp];
-                return;
-            }
-        }
-        self.operationsMovableUIStackView.frame = self.operationsMovableUIStackViewFrame;
     }
 }
 
@@ -286,6 +258,27 @@
     LicenseViewController *licenseViewController = [[LicenseViewController alloc] init];
     [self presentViewController:licenseViewController animated:YES completion:nil];
     [licenseViewController release];
+}
+
+// move buttons group to other location after orientation is changed
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    if (size.width > size.height) {
+        [UIView animateWithDuration:0.5f
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{[self.centralButtonsBlockUIStackView insertArrangedSubview:self.operationsMovableUIStackView atIndex:0];}
+                         completion:^(BOOL finished) {}
+         ];
+        NSLog(@"Part1");
+    } else {
+        [UIView animateWithDuration:0.5f
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{[self.centralButtonsBlockUIStackView insertArrangedSubview:self.operationsMovableUIStackView atIndex:[[self.centralButtonsBlockUIStackView subviews] count] - 1];}
+                         completion:^(BOOL finished) {}
+         ];
+    }
 }
 
 - (void)dealloc {
