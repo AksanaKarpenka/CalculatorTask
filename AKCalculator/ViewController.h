@@ -16,8 +16,14 @@
     BOOL isResultButtonClicked;
 }
 
-@property (retain, nonatomic) IBOutlet UILabel *displayLabel;
+@property (retain, nonatomic) NSDictionary *numSystemButtonsNames;
+@property (retain, nonatomic) IBOutlet UILabel *decResultLabel;
+@property (retain, nonatomic) IBOutlet UILabel *binResultLabel;
+@property (retain, nonatomic) IBOutlet UILabel *octResultLabel;
+@property (retain, nonatomic) IBOutlet UILabel *hexResultLabel;
 @property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *digitCollectionButtons;
+@property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *hexCollectionButtons;
+@property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *numeralSystemButtons;
 @property (retain, nonatomic) IBOutlet UIButton *clearButton;
 @property (retain, nonatomic) IBOutlet UIButton *dotButton;
 @property (retain, nonatomic) IBOutlet UIButton *sqrtUIButton;
@@ -33,6 +39,8 @@
 @property (retain, nonatomic) IBOutlet UIStackView *centralButtonsBlockUIStackView;
 @property (assign, nonatomic) CGRect operationsMovableUIStackViewFrame;
 @property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *operationsCollectionButtons;
+
+- (IBAction)numSystemButtonTapped:(id)sender;
 
 @end
 
