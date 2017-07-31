@@ -25,15 +25,19 @@
 
             continue;
         }
-        UIColor *buttonBackgroundColor = [UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:1.0];
-        UIColor *buttonTitleColor = [UIColor colorWithRed:(179/255.0) green:(179/255.0) blue:(179/255.0) alpha:1.0];
-        [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
-        [button setBackgroundColor:buttonBackgroundColor];
-        [button setAlpha:0.5];
-        [button.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-        [button.titleLabel setShadowColor:[UIColor whiteColor]];
-        [button.titleLabel setShadowOffset:CGSizeMake(-1, 0)];
+        [self stylizeNotActiveNumSystemButton:button];
     }
+}
+
+- (void)stylizeNotActiveNumSystemButton:(UIButton *)button {
+    UIColor *buttonBackgroundColor = [UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:1.0];
+    UIColor *buttonTitleColor = [UIColor colorWithRed:(179/255.0) green:(179/255.0) blue:(179/255.0) alpha:1.0];
+    [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
+    [button setBackgroundColor:buttonBackgroundColor];
+    [button setAlpha:0.5];
+    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [button.titleLabel setShadowColor:[UIColor whiteColor]];
+    [button.titleLabel setShadowOffset:CGSizeMake(-1, 0)];
 }
 
 - (void)enableDotButton:(BOOL)enable {

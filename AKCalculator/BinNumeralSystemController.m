@@ -11,7 +11,7 @@
 
 @implementation BinNumeralSystemController
 
-- (void)disableButtons:(id)sender contr:(ViewController *)contr{
+- (void)disableButtons:(id)sender contr:(ViewController *)contr {
     [super disableButtons:sender contr:contr];
     
     [super setLabelAppearance:self.resultLabel.tag];

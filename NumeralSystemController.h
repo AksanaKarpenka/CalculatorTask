@@ -17,5 +17,6 @@
 - (void)disableButtons:(id)sender contr:(ViewController *)contr;
 - (void)enableDotButton:(BOOL)enable;
 - (void)setLabelAppearance:(NSInteger)labelTag;
+- (void)stylizeNotActiveNumSystemButton:(UIButton *)button;
 
 @end

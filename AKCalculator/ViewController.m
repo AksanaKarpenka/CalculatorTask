@@ -60,6 +60,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
                                   nil];
     
     self.numSystemControllerObject = [[[DecNumeralSystemController alloc] init] autorelease];
+    self.numSystemControllerObject.resultLabel = self.decResultLabel;
 }
 
 /* 
@@ -118,6 +119,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
     self.model.operationCount = 0;
+    self.numSystemControllerObject.resultLabel = self.decResultLabel;
     
     [self switchAvailabilityButton:YES];
 }
@@ -144,40 +146,34 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
         [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
     }
     if (enable) {
-        for (UIButton *button in self.numeralSystemButtons) {
-            if ([button.currentTitle isEqualToString:@"DEC"]) {
-                UIColor *buttonBackgroundColor = [UIColor blackColor];
-                UIColor *buttonTitleColor = [UIColor colorWithRed:(255/255.0) green:(128/255.0) blue:(0/255.0) alpha:1.0];
-                [button setAlpha:0.65];
-                [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
-                [button setBackgroundColor:buttonBackgroundColor];
-                [button.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
-                [button.titleLabel setShadowColor:[UIColor whiteColor]];
-                [button.titleLabel setShadowOffset:CGSizeMake(-1, 0)];
-                self.decResultLabel.textColor = [UIColor blackColor];
-                [self.decResultLabel setFont:[UIFont systemFontOfSize:25]];
-                continue;
-            }
-            UIColor *buttonBackgroundColor = [UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:1.0];
-            UIColor *buttonTitleColor = [UIColor colorWithRed:(179/255.0) green:(179/255.0) blue:(179/255.0) alpha:1.0];
+        [self activateNumeralSystemButtons];
+    }
+}
+
+- (void)activateNumeralSystemButtons {
+    for (UIButton *button in self.numeralSystemButtons) {
+        if ([button.currentTitle isEqualToString:@"DEC"]) {
+            UIColor *buttonBackgroundColor = [UIColor blackColor];
+            UIColor *buttonTitleColor = [UIColor colorWithRed:(255/255.0) green:(128/255.0) blue:(0/255.0) alpha:1.0];
+            [button setAlpha:0.65];
             [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
             [button setBackgroundColor:buttonBackgroundColor];
-            [button setAlpha:0.5];
-            [button.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+            [button.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
             [button.titleLabel setShadowColor:[UIColor whiteColor]];
             [button.titleLabel setShadowOffset:CGSizeMake(-1, 0)];
-            self.binResultLabel.textColor = [UIColor lightGrayColor];
-            [self.binResultLabel setFont:[UIFont systemFontOfSize:17]];
-            self.hexResultLabel.textColor = [UIColor lightGrayColor];
-            [self.hexResultLabel setFont:[UIFont systemFontOfSize:17]];
-            self.octResultLabel.textColor = [UIColor lightGrayColor];
-            [self.octResultLabel setFont:[UIFont systemFontOfSize:17]];
+            self.decResultLabel.textColor = [UIColor blackColor];
+            [self.decResultLabel setFont:[UIFont systemFontOfSize:25]];
+            continue;
         }
-        for (UIButton *button in self.hexCollectionButtons) {
-            button.enabled = NO;
-            UIColor *buttonTitleColor = [UIColor grayColor];
-            [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
-        }
+    
+        [self.numSystemControllerObject stylizeNotActiveNumSystemButton:button];
+        
+        [self.numSystemControllerObject setLabelAppearance:2];
+    }
+    for (UIButton *button in self.hexCollectionButtons) {
+        button.enabled = NO;
+        UIColor *buttonTitleColor = [UIColor grayColor];
+        [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
     }
 }
 
@@ -317,11 +313,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
 
 // show error message and set data to init state
 - (void)showExceptionMessageAndClearData:(NSException *)exception {
-    if (self.numSystemControllerObject.resultLabel == nil) {
-        self.decResultLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
-    } else {
-        self.numSystemControllerObject.resultLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
-    }
+    self.numSystemControllerObject.resultLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
     [self switchAvailabilityButton:NO];
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
