@@ -18,15 +18,7 @@
 - (void)disableButtons:(id)sender contr:(ViewController *)contr {
     [super disableButtons:sender contr:contr];
     
-    self.viewController.octResultLabel.textColor = [UIColor blackColor];
-    [self.viewController.octResultLabel setFont:[UIFont systemFontOfSize:25]];
-    
-    self.viewController.decResultLabel.textColor = [UIColor lightGrayColor];
-    [self.viewController.decResultLabel setFont:[UIFont systemFontOfSize:17]];
-    self.viewController.binResultLabel.textColor = [UIColor lightGrayColor];
-    [self.viewController.binResultLabel setFont:[UIFont systemFontOfSize:17]];
-    self.viewController.hexResultLabel.textColor = [UIColor lightGrayColor];
-    [self.viewController.hexResultLabel setFont:[UIFont systemFontOfSize:17]];
+    [super setLabelAppearance:self.resultLabel.tag];
     
     NSMutableArray *allButtonsMutableArray = [NSMutableArray array];
     [allButtonsMutableArray addObjectsFromArray:self.viewController.hexCollectionButtons];
@@ -48,9 +40,7 @@
         [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
     }
     
-    self.viewController.dotButton.enabled = NO;
-    UIColor *buttonTitleColor = [UIColor grayColor];
-    [self.viewController.dotButton setTitleColor:buttonTitleColor forState:UIControlStateNormal];
+    [super enableDotButton:NO];
 }
 
 @end

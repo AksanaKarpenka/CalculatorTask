@@ -36,8 +36,27 @@
     }
 }
 
+- (void)enableDotButton:(BOOL)enable {
+    self.viewController.dotButton.enabled = enable;
+    UIColor *buttonTitleColor = [UIColor grayColor];
+    [self.viewController.dotButton setTitleColor:buttonTitleColor forState:UIControlStateNormal];
+}
+
+- (void)setLabelAppearance:(NSInteger)labelTag {
+    for (UILabel *label in self.viewController.numSystemResultLabelsCollection) {
+        if (label.tag == labelTag) {
+            label.textColor = [UIColor blackColor];
+            [label setFont:[UIFont systemFontOfSize:25]];
+            continue;
+        }
+        label.textColor = [UIColor lightGrayColor];
+        [label setFont:[UIFont systemFontOfSize:17]];
+    }
+}
+
 - (void)dealloc {
     [_viewController release];
+    [_resultLabel release];
     [super dealloc];
 }
 

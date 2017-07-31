@@ -12,7 +12,10 @@
 @interface NumeralSystemController : UIViewController
 
 @property (retain, nonatomic) ViewController *viewController;
+@property (retain, nonatomic) UILabel *resultLabel;
 
-- (void) disableButtons:(id)sender contr:(ViewController *)contr;
+- (void)disableButtons:(id)sender contr:(ViewController *)contr;
+- (void)enableDotButton:(BOOL)enable;
+- (void)setLabelAppearance:(NSInteger)labelTag;
 
 @end

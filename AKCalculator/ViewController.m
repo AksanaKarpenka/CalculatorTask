@@ -58,6 +58,8 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
                                   [NSNumber numberWithInt:NUM_SYSTEM_DEC_BUTTON], @"DEC",
                                   [NSNumber numberWithInt:NUM_SYSTEM_HEX_BUTTON], @"HEX",
                                   nil];
+    
+    self.numSystemControllerObject = [[[DecNumeralSystemController alloc] init] autorelease];
 }
 
 /* 
@@ -315,7 +317,11 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
 
 // show error message and set data to init state
 - (void)showExceptionMessageAndClearData:(NSException *)exception {
-    self.decResultLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
+    if (self.numSystemControllerObject.resultLabel == nil) {
+        self.decResultLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
+    } else {
+        self.numSystemControllerObject.resultLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
+    }
     [self switchAvailabilityButton:NO];
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
@@ -359,32 +365,33 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
 }
 
 - (IBAction)numSystemButtonTapped:(id)sender {
-    NumeralSystemController *numSystemControllerObject = [self createNumeralSystemObject:sender];
-    numSystemControllerObject.viewController = self;
-    [numSystemControllerObject disableButtons:sender contr:self];
+    [self createNumeralSystemObject:sender];
+    self.numSystemControllerObject.viewController = self;
+    [self.numSystemControllerObject disableButtons:sender contr:self];
 }
 
-- (NumeralSystemController *)createNumeralSystemObject:(id)sender {
+- (void)createNumeralSystemObject:(id)sender {
     NSNumber *numSystemButtonIndex = [self.numSystemButtonsNames objectForKey:[sender currentTitle]];
-    NumeralSystemController *numSystemControllerObject = nil;
     switch ([numSystemButtonIndex integerValue]) {
         case NUM_SYSTEM_BIN_BUTTON:
-            numSystemControllerObject = [[[BinNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject = [[[BinNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject.resultLabel = self.binResultLabel;
             break;
         case NUM_SYSTEM_OCT_BUTTON:
-            numSystemControllerObject = [[[OctNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject = [[[OctNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject.resultLabel = self.octResultLabel;
             break;
         case NUM_SYSTEM_DEC_BUTTON:
-            numSystemControllerObject = [[[DecNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject = [[[DecNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject.resultLabel = self.decResultLabel;
             break;
         case NUM_SYSTEM_HEX_BUTTON:
-            numSystemControllerObject = [[[HexNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject = [[[HexNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject.resultLabel = self.hexResultLabel;
             break;
         default:
             break;
     }
-    
-    return numSystemControllerObject;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
@@ -426,6 +433,8 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     [_hexCollectionButtons release];
     [_numeralSystemButtons release];
     [_numSystemButtonsNames release];
+    [_numSystemControllerObject release];
+    [_numSystemResultLabelsCollection release];
     [super dealloc];
 }
 
