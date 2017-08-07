@@ -1,0 +1,82 @@
+//
+//  CalculatorModel.m
+//  AKCalculator
+//
+//  Created by HomeStation on 6/6/17.
+//  Copyright © 2017 aksanakarpenka. All rights reserved.
+//
+
+#import "CalculatorModel.h"
+
+@interface CalculatorModel ()
+
+@end
+
+@implementation CalculatorModel
+
+// change sign of number to opposite
+- (CGFloat)changeSign:(UILabel *)label {
+    CGFloat floatValue = ([label.text floatValue]) ? [label.text floatValue] * (-1) : 0;
+
+    return floatValue;
+}
+
+- (CGFloat)performOperationWithOperand:(CGFloat)operand {
+    CGFloat value = self.firstOperand;
+    NSArray *operations = @[@"+", @"-", @"*", @"/", @"%", @"\u221A"];
+    switch ([operations indexOfObject:self.previousOperation]) {
+        case 0:
+            value += operand;
+            NSLog(@"+ was tapped");
+            break;
+        case 1:
+            value -= operand;
+            NSLog(@"- was tapped");
+            break;
+        case 2:
+            value *= operand;
+            NSLog(@"* was tapped");
+            break;
+        case 3:
+            if (operand == 0) {
+                @throw([NSException exceptionWithName:@"Dividing by zero"
+                                               reason:@"Деление на ноль"
+                                             userInfo:nil]);
+            }
+            value /= operand;
+            NSLog(@"/ was tapped");
+            break;
+        case 4:
+            value = fmod(value, operand);
+            NSLog(@"%% was tapped");
+            break;
+        case 5:
+            if (value < 0) {
+                @throw([NSException exceptionWithName:@"Square root of negative number"
+                                               reason:@"Корень из отрицательного числа"
+                                             userInfo:nil]);
+            }
+            value = sqrt(value);
+            NSLog(@"\u221A was1 tapped");
+            break;
+        default:
+            break;
+    }
+    self.firstOperand = value;
+    return value;
+}
+
+- (void)catchResultValueChanges {
+    SEL selector = @selector(handleResultValueChanges:);
+    if (self.delegate && [self.delegate respondsToSelector:selector]) {
+        [self.delegate handleResultValueChanges:self];
+    }
+}
+
+- (void)dealloc {
+    [_previousOperation release];
+    [_currentOperation release];
+    [super dealloc];
+}
+
+@end

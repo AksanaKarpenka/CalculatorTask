@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CalculatorModel.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<CalculatorModelDelegate>
 
 @property (retain, nonatomic) IBOutlet UILabel *displayLabel;
 @property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *digitCollectionButtons;
 @property (retain, nonatomic) IBOutlet UIButton *clearButton;
-@property (retain, nonatomic) IBOutlet UIButton *dotButton;
+@property (retain, nonatomic) IBOutlet UIButton *sqrtUIButton;
+@property (retain, nonatomic) IBOutlet UIButton *plusMinusUIButton;
+@property (retain, nonatomic) CalculatorModel *model;
+@property (assign, nonatomic) BOOL isTypingNumber;
+@property (assign, nonatomic) BOOL isResultButtonClicked;
 
 @end
-
