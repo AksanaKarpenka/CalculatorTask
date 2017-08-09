@@ -25,6 +25,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *clearButton;
 @property (retain, nonatomic) IBOutlet UIButton *sqrtUIButton;
 @property (retain, nonatomic) IBOutlet UIButton *plusMinusUIButton;
+@property (retain, nonatomic) IBOutlet UIButton *dotButton;
 @property (retain, nonatomic) CalculatorModel *model;
 @property (retain, nonatomic) NumeralSystemController *numSystemControllerObject;
 @property (retain, nonatomic) IBOutlet UIStackView *operationsMovableUIStackView;

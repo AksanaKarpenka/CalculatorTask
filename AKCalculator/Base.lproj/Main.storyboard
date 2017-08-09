@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vDH-ig-j5h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vDH-ig-j5h">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -119,7 +119,7 @@
                                                             <action selector="numSystemButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0YM-qD-eTG"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="G8n-PX-FLh">
+                                                    <label opaque="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8n-PX-FLh">
                                                         <rect key="frame" x="152" y="0.0" width="616" height="97.5"/>
                                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.098261443661971828" colorSpace="calibratedRGB"/>
                                                         <gestureRecognizers/>
@@ -733,11 +733,12 @@
                     <connections>
                         <outlet property="binResultLabel" destination="WN0-TE-zlo" id="urI-2l-9BA"/>
                         <outlet property="centralButtonsBlockUIStackView" destination="4PT-HE-RDy" id="sOY-Eq-Eng"/>
+                        <outlet property="clearButton" destination="2Nx-bj-UC7" id="LH1-Lt-0IE"/>
                         <outlet property="decResultLabel" destination="G8n-PX-FLh" id="Riq-Te-BsS"/>
+                        <outlet property="dotButton" destination="DMJ-mH-2y4" id="VqV-sa-AXw"/>
                         <outlet property="hexResultLabel" destination="EH4-dg-pHD" id="rIH-Nb-dnm"/>
                         <outlet property="octResultLabel" destination="M7g-NT-TJh" id="KHy-x8-cH3"/>
                         <outlet property="operationsMovableUIStackView" destination="b5c-DK-SqN" id="8hb-T7-MC8"/>
-                        <outlet property="displayLabel" destination="G8n-PX-FLh" id="Nni-fL-Vqh"/>
                         <outlet property="plusMinusUIButton" destination="ioP-2H-gmd" id="Cw4-Rq-hTg"/>
                         <outlet property="sqrtUIButton" destination="wHh-L8-271" id="HmY-W1-QTT"/>
                         <outletCollection property="digitCollectionButtons" destination="jKx-VV-wD2" id="YrA-k4-eDf"/>

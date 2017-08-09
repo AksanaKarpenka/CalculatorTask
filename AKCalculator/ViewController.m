@@ -94,7 +94,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     NSString *result;
 
     if (self.isTypingNumber) {
-        result = [NSString stringWithFormat:@"%@%@", self.displayLabel.text, digit];
+        result = [NSString stringWithFormat:@"%@%@", self.decResultLabel.text, digit];
     }
     else {
         result = [NSString stringWithFormat:@"%@", digit];
@@ -120,7 +120,6 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     self.model.previousOperation = nil;
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
-    self.model.operationCount = 0;
     self.numSystemControllerObject.resultLabel = self.decResultLabel;
     self.model.performingOperationStatus = STATUS_CURRENT_OPERATION_IS_NULL;
     
@@ -213,7 +212,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
         self.model.currentOperation = [sender currentTitle];
 
         if (self.model.performingOperationStatus == STATUS_PERFORMING_PREVIOUS_OPERATION) {
-            self.model.secondOperand = [self.displayLabel.text floatValue];
+            self.model.secondOperand = [self.decResultLabel.text floatValue];
             @try {
                 value = [self.model performOperationWithOperand:self.model.secondOperand];
             } @catch (NSException *exception) {
@@ -234,7 +233,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
 
 // change sign of number to opposite
 - (IBAction)changeSignTapped:(id)sender {
-    [self showResult:[self.model changeSign:self.displayLabel]];
+    [self showResult:[self.model changeSign:self.decResultLabel]];
 }
 
 // square root operation button is handled here
@@ -245,7 +244,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     @try {
         if (self.model.performingOperationStatus == STATUS_PERFORMING_PREVIOUS_OPERATION) {
             if (self.isTypingNumber) {
-                value = [self.model performOperationWithOperand:[self.displayLabel.text floatValue]];
+                value = [self.model performOperationWithOperand:[self.decResultLabel.text floatValue]];
                 self.model.firstOperand = value;
             }
             self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
@@ -274,7 +273,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
         if (self.isTypingNumber) {
             self.isTypingNumber = NO;
             if(self.model.performingOperationStatus == STATUS_WAITING_NEXT_OPERATION) {
-                self.model.secondOperand = [self.displayLabel.text floatValue];
+                self.model.secondOperand = [self.decResultLabel.text floatValue];
                 value = [self.model performOperationWithOperand:self.model.secondOperand];
                 [self showResult:value];
             }
@@ -298,7 +297,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     [formatDecimal setNumberStyle:NSNumberFormatterDecimalStyle];
     [formatDecimal setMaximumFractionDigits:6];
 
-    self.displayLabel.text = [NSString stringWithFormat:@"%@", [formatDecimal stringFromNumber:@(value)]];
+    self.decResultLabel.text = [NSString stringWithFormat:@"%@", [formatDecimal stringFromNumber:@(value)]];
     self.model.delegate = self;
     [self.model catchResultValueChanges];
 
@@ -313,6 +312,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
 // show error message and set data to init state
 - (void)showExceptionMessageAndClearData:(NSException *)exception {
     self.numSystemControllerObject.resultLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
+    [self.numSystemControllerObject.resultLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [self switchAvailabilityButton:NO];
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
@@ -399,6 +399,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
         valFloat /= 2;
     }
     self.binResultLabel.text = [NSString stringWithFormat:@"%@", str];
+}
 
 - (void)setPerformingOperationStatus {
     if (self.model.performingOperationStatus == STATUS_CURRENT_OPERATION_IS_NULL) {
@@ -426,6 +427,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     [_numSystemButtonsNames release];
     [_numSystemControllerObject release];
     [_numSystemResultLabelsCollection release];
+    [_dotButton release];
     [super dealloc];
 }
 
