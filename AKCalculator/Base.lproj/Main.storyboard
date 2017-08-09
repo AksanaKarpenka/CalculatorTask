@@ -496,19 +496,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="eOe-hL-au0"/>
                     <connections>
-                        <outlet property="addUIButton" destination="qEa-0s-Pkd" id="43w-6B-XyZ"/>
                         <outlet property="centralButtonsBlockUIStackView" destination="4PT-HE-RDy" id="sOY-Eq-Eng"/>
-                        <outlet property="clearButton" destination="2Nx-bj-UC7" id="JiK-Wb-aYF"/>
-                        <outlet property="displayLabel" destination="G8n-PX-FLh" id="Nni-fL-Vqh"/>
-                        <outlet property="divUIButton" destination="Sua-fd-TWX" id="zYs-Xl-2ag"/>
-                        <outlet property="dotButton" destination="DMJ-mH-2y4" id="G1I-oV-C2l"/>
-                        <outlet property="modUIButton" destination="k8e-q0-USf" id="vJ6-Ve-uDF"/>
-                        <outlet property="multUIButton" destination="CBj-GR-wDg" id="04i-7f-u6r"/>
                         <outlet property="operationsMovableUIStackView" destination="b5c-DK-SqN" id="8hb-T7-MC8"/>
+                        <outlet property="displayLabel" destination="G8n-PX-FLh" id="Nni-fL-Vqh"/>
                         <outlet property="plusMinusUIButton" destination="ioP-2H-gmd" id="Cw4-Rq-hTg"/>
-                        <outlet property="resultUIButton" destination="5ci-v8-xGc" id="j56-Tz-F8h"/>
                         <outlet property="sqrtUIButton" destination="wHh-L8-271" id="HmY-W1-QTT"/>
-                        <outlet property="subUIButton" destination="vay-ez-6gJ" id="984-GV-B84"/>
                         <outletCollection property="digitCollectionButtons" destination="jKx-VV-wD2" id="YrA-k4-eDf"/>
                         <outletCollection property="digitCollectionButtons" destination="Zq8-qa-cwz" id="Sdq-ge-JZy"/>
                         <outletCollection property="digitCollectionButtons" destination="v8J-OE-XCZ" id="cCc-vK-EgH"/>
