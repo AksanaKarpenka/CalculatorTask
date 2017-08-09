@@ -9,6 +9,11 @@
 #import "ViewController.h"
 #import "AboutViewController.h"
 #import "LicenseViewController.h"
+#import "BinNumeralSystemController.h"
+#import "OctNumeralSystemController.h"
+#import "DecNumeralSystemController.h"
+#import "HexNumeralSystemController.h"
+#import "NumeralSystemController.h"
 #import "Constants.h"
 
 @interface ViewController ()
@@ -17,13 +22,18 @@
 
 @implementation ViewController
 
+const int NUM_SYSTEM_BIN_BUTTON = 0;
+const int NUM_SYSTEM_OCT_BUTTON = 1;
+const int NUM_SYSTEM_DEC_BUTTON = 2;
+const int NUM_SYSTEM_HEX_BUTTON = 3;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     UISwipeGestureRecognizer *swipeRecognizer = [[[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector
                                                   (handleSwipeRecognizer:)] autorelease];
-    [self.displayLabel addGestureRecognizer:swipeRecognizer];
+    [self.decResultLabel addGestureRecognizer:swipeRecognizer];
     UIBarButtonItem *aboutUsUIBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"О нас"
                                                                                style:UIBarButtonItemStylePlain
                                                                               target:self
@@ -33,6 +43,25 @@
     [self.sqrtUIButton setTitle:@"\u221A" forState:UIControlStateNormal];
     [self.plusMinusUIButton setTitle:@"\u00B1" forState:UIControlStateNormal];
     self.model = [[[CalculatorModel alloc] init] autorelease];
+    NSMutableArray *allButtonsMutableArray = [NSMutableArray array];
+    [allButtonsMutableArray addObjectsFromArray:self.hexCollectionButtons];
+    for (UIButton *button in allButtonsMutableArray) {
+        button.enabled = NO;
+        UIColor *buttonTitleColor = [UIColor grayColor];
+        [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
+    }
+    
+    [self.decResultLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
+    
+    self.numSystemButtonsNames = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [NSNumber numberWithInt:NUM_SYSTEM_BIN_BUTTON], @"BIN",
+                                  [NSNumber numberWithInt:NUM_SYSTEM_OCT_BUTTON], @"OCT",
+                                  [NSNumber numberWithInt:NUM_SYSTEM_DEC_BUTTON], @"DEC",
+                                  [NSNumber numberWithInt:NUM_SYSTEM_HEX_BUTTON], @"HEX",
+                                  nil];
+    
+    self.numSystemControllerObject = [[[DecNumeralSystemController alloc] init] autorelease];
+    self.numSystemControllerObject.resultLabel = self.decResultLabel;
 }
 
 /* 
@@ -40,14 +69,14 @@
  sets the value to @"0" if all symbols were removed
  */
 - (void)handleSwipeRecognizer:(UISwipeGestureRecognizer *)swipeRecognizer {
-    NSString *displayLabelText = self.displayLabel.text;
-    NSString *result = [displayLabelText substringToIndex:self.displayLabel.text.length - 1];
+    NSString *displayLabelText = self.decResultLabel.text;
+    NSString *result = [displayLabelText substringToIndex:self.decResultLabel.text.length - 1];
     
     if (result.length == 0) {
-        self.displayLabel.text = @"0";
+        self.decResultLabel.text = @"0";
     }
     else {
-        self.displayLabel.text = result;
+        self.decResultLabel.text = result;
     }
 }
 
@@ -63,30 +92,35 @@
     }
     NSString *digit = [sender titleForState:UIControlStateNormal];
     NSString *result;
+
     if (self.isTypingNumber) {
-        result = [NSString stringWithFormat:@"%@%@", self.displayLabel.text, digit];
+        result = [NSString stringWithFormat:@"%@%@", self.decResultLabel.text, digit];
     }
     else {
         result = [NSString stringWithFormat:@"%@", digit];
         self.isTypingNumber = YES;
     }
-    NSString *displayLabelText = self.displayLabel.text;
+    NSString *displayLabelText = self.decResultLabel.text;
     
     if (![displayLabelText containsString:@"."]) {
-        self.displayLabel.text = [NSString stringWithFormat:@"%.f",  result.floatValue];
+        self.decResultLabel.text = [NSString stringWithFormat:@"%.f",  result.floatValue];
     }
     else {
-        self.displayLabel.text = result;
+        self.decResultLabel.text = result;
     }
 }
 
 // reset displayLabelText value to @"0"
 - (IBAction)clearButtonTapped:(id)sender {
-    self.displayLabel.text = @"0";
+    self.decResultLabel.text = @"0";
+    self.binResultLabel.text = @"0";
+    self.octResultLabel.text = @"0";
+    self.hexResultLabel.text = @"0";
     self.model.currentOperation = nil;
     self.model.previousOperation = nil;
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
+    self.numSystemControllerObject.resultLabel = self.decResultLabel;
     self.model.performingOperationStatus = STATUS_CURRENT_OPERATION_IS_NULL;
     
     [self switchAvailabilityButton:YES];
@@ -97,9 +131,50 @@
     NSMutableArray *allButtonsMutableArray = [NSMutableArray array];
     [allButtonsMutableArray addObjectsFromArray:self.digitCollectionButtons];
     [allButtonsMutableArray addObjectsFromArray:self.operationsCollectionButtons];
+    [allButtonsMutableArray addObjectsFromArray:self.hexCollectionButtons];
+    [allButtonsMutableArray addObjectsFromArray:self.numeralSystemButtons];
     for (UIButton *button in allButtonsMutableArray) {
         button.enabled = enable;
         UIColor *buttonTitleColor = (enable) ? [UIColor blackColor] : [UIColor grayColor];
+        [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
+    }
+    for (UIButton *button in self.operationsCollectionButtons) {
+        UIColor *buttonTitleColor;
+        if ([button.currentTitle isEqualToString:@"."] || [button.currentTitle isEqualToString:@"="]) {
+            buttonTitleColor = (enable) ? [UIColor blackColor] : [UIColor grayColor];
+        } else {
+            buttonTitleColor = (enable) ? [UIColor whiteColor] : [UIColor grayColor];
+        }
+        [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
+    }
+    if (enable) {
+        [self activateNumeralSystemButtons];
+    }
+}
+
+- (void)activateNumeralSystemButtons {
+    for (UIButton *button in self.numeralSystemButtons) {
+        if ([button.currentTitle isEqualToString:@"DEC"]) {
+            UIColor *buttonBackgroundColor = [UIColor blackColor];
+            UIColor *buttonTitleColor = [UIColor colorWithRed:(255/255.0) green:(128/255.0) blue:(0/255.0) alpha:1.0];
+            [button setAlpha:0.65];
+            [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
+            [button setBackgroundColor:buttonBackgroundColor];
+            [button.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+            [button.titleLabel setShadowColor:[UIColor whiteColor]];
+            [button.titleLabel setShadowOffset:CGSizeMake(-1, 0)];
+            self.decResultLabel.textColor = [UIColor blackColor];
+            [self.decResultLabel setFont:[UIFont systemFontOfSize:25]];
+            continue;
+        }
+    
+        [self.numSystemControllerObject stylizeNotActiveNumSystemButton:button];
+        
+        [self.numSystemControllerObject setLabelAppearance:2];
+    }
+    for (UIButton *button in self.hexCollectionButtons) {
+        button.enabled = NO;
+        UIColor *buttonTitleColor = [UIColor grayColor];
         [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
     }
 }
@@ -110,11 +185,11 @@
  */
 - (IBAction)dotButtonTapped:(id)sender {
     NSString *dot = [sender titleForState:UIControlStateNormal];
-    NSString *displayLabelText = self.displayLabel.text;
+    NSString *displayLabelText = self.decResultLabel.text;
     
     if (![displayLabelText containsString:@"."]) {
-        NSString *result = [NSString stringWithFormat:@"%@%@", self.displayLabel.text, dot];
-        self.displayLabel.text = result;
+        NSString *result = [NSString stringWithFormat:@"%@%@", self.decResultLabel.text, dot];
+        self.decResultLabel.text = result;
     }
 }
 
@@ -126,7 +201,7 @@
     }
     CGFloat value = 0;
     if (!self.model.firstOperand) {
-        self.model.firstOperand = [self.displayLabel.text floatValue];
+        self.model.firstOperand = [self.decResultLabel.text floatValue];
     }
     if (!self.model.currentOperation && !self.model.previousOperation) {
         self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
@@ -135,8 +210,9 @@
         self.isTypingNumber = NO;
         [self setPerformingOperationStatus];
         self.model.currentOperation = [sender currentTitle];
+
         if (self.model.performingOperationStatus == STATUS_PERFORMING_PREVIOUS_OPERATION) {
-            self.model.secondOperand = [self.displayLabel.text floatValue];
+            self.model.secondOperand = [self.decResultLabel.text floatValue];
             @try {
                 value = [self.model performOperationWithOperand:self.model.secondOperand];
             } @catch (NSException *exception) {
@@ -157,7 +233,7 @@
 
 // change sign of number to opposite
 - (IBAction)changeSignTapped:(id)sender {
-    [self showResult:[self.model changeSign:self.displayLabel]];
+    [self showResult:[self.model changeSign:self.decResultLabel]];
 }
 
 // square root operation button is handled here
@@ -168,7 +244,7 @@
     @try {
         if (self.model.performingOperationStatus == STATUS_PERFORMING_PREVIOUS_OPERATION) {
             if (self.isTypingNumber) {
-                value = [self.model performOperationWithOperand:[self.displayLabel.text floatValue]];
+                value = [self.model performOperationWithOperand:[self.decResultLabel.text floatValue]];
                 self.model.firstOperand = value;
             }
             self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
@@ -176,7 +252,7 @@
             self.model.performingOperationStatus = STATUS_WAITING_NEXT_OPERATION;
         }
         else {
-            self.model.firstOperand = [self.displayLabel.text floatValue];
+            self.model.firstOperand = [self.decResultLabel.text floatValue];
             self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
             value = [self.model performOperationWithOperand:0];
         }
@@ -197,7 +273,7 @@
         if (self.isTypingNumber) {
             self.isTypingNumber = NO;
             if(self.model.performingOperationStatus == STATUS_WAITING_NEXT_OPERATION) {
-                self.model.secondOperand = [self.displayLabel.text floatValue];
+                self.model.secondOperand = [self.decResultLabel.text floatValue];
                 value = [self.model performOperationWithOperand:self.model.secondOperand];
                 [self showResult:value];
             }
@@ -220,9 +296,11 @@
     NSNumberFormatter *formatDecimal = [[NSNumberFormatter alloc] init];
     [formatDecimal setNumberStyle:NSNumberFormatterDecimalStyle];
     [formatDecimal setMaximumFractionDigits:6];
-    self.displayLabel.text = [NSString stringWithFormat:@"%@", [formatDecimal stringFromNumber:@(value)]];
+
+    self.decResultLabel.text = [NSString stringWithFormat:@"%@", [formatDecimal stringFromNumber:@(value)]];
     self.model.delegate = self;
     [self.model catchResultValueChanges];
+
     [formatDecimal release];
 }
 
@@ -233,7 +311,8 @@
 
 // show error message and set data to init state
 - (void)showExceptionMessageAndClearData:(NSException *)exception {
-    self.displayLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
+    self.numSystemControllerObject.resultLabel.text = [NSString stringWithFormat:@"%@", exception.reason];
+    [self.numSystemControllerObject.resultLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [self switchAvailabilityButton:NO];
     self.model.firstOperand = 0;
     self.model.secondOperand = 0;
@@ -276,6 +355,52 @@
     }
 }
 
+- (IBAction)numSystemButtonTapped:(id)sender {
+    [self createNumeralSystemObject:sender];
+    self.numSystemControllerObject.viewController = self;
+    [self.numSystemControllerObject disableButtons:sender contr:self];
+}
+
+- (void)createNumeralSystemObject:(id)sender {
+    NSNumber *numSystemButtonIndex = [self.numSystemButtonsNames objectForKey:[sender currentTitle]];
+    switch ([numSystemButtonIndex integerValue]) {
+        case NUM_SYSTEM_BIN_BUTTON:
+            self.numSystemControllerObject = [[[BinNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject.resultLabel = self.binResultLabel;
+            break;
+        case NUM_SYSTEM_OCT_BUTTON:
+            self.numSystemControllerObject = [[[OctNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject.resultLabel = self.octResultLabel;
+            break;
+        case NUM_SYSTEM_DEC_BUTTON:
+            self.numSystemControllerObject = [[[DecNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject.resultLabel = self.decResultLabel;
+            break;
+        case NUM_SYSTEM_HEX_BUTTON:
+            self.numSystemControllerObject = [[[HexNumeralSystemController alloc] init] autorelease];
+            self.numSystemControllerObject.resultLabel = self.hexResultLabel;
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    unsigned int valFloat = (unsigned int)[self.decResultLabel.text floatValue];
+    self.hexResultLabel.text = [NSString stringWithFormat:@"%X", valFloat];
+    self.octResultLabel.text = [NSString stringWithFormat:@"%O", valFloat];
+    NSMutableString *str = [NSMutableString string];
+    if (valFloat == 0) {
+        [str insertString:@"0" atIndex:0];
+    }
+
+    while (valFloat) {
+        [str insertString:(valFloat & 1) ? @"1" : @"0" atIndex:0];
+        valFloat /= 2;
+    }
+    self.binResultLabel.text = [NSString stringWithFormat:@"%@", str];
+}
+
 - (void)setPerformingOperationStatus {
     if (self.model.performingOperationStatus == STATUS_CURRENT_OPERATION_IS_NULL) {
         self.model.performingOperationStatus = STATUS_WAITING_NEXT_OPERATION;
@@ -285,7 +410,7 @@
 }
 
 - (void)dealloc {
-    [_displayLabel release];
+    [_decResultLabel release];
     [_digitCollectionButtons release];
     [_clearButton release];
     [_sqrtUIButton release];
@@ -294,6 +419,15 @@
     [_operationsMovableUIStackView release];
     [_centralButtonsBlockUIStackView release];
     [_operationsCollectionButtons release];
+    [_binResultLabel release];
+    [_octResultLabel release];
+    [_hexResultLabel release];
+    [_hexCollectionButtons release];
+    [_numeralSystemButtons release];
+    [_numSystemButtonsNames release];
+    [_numSystemControllerObject release];
+    [_numSystemResultLabelsCollection release];
+    [_dotButton release];
     [super dealloc];
 }
 
