@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9619AA8B1EEFC631001F2EC1 /* CalculatorNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9619AA8A1EEFC631001F2EC1 /* CalculatorNotificationController.m */; };
 		962B6D2C1EE75D0A001B402C /* CalculatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 962B6D2B1EE75D0A001B402C /* CalculatorModel.m */; };
 		9A21DA541ED3807D0013C23C /* LicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A21DA521ED3807D0013C23C /* LicenseViewController.m */; };
 		9A21DA551ED3807D0013C23C /* LicenseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A21DA531ED3807D0013C23C /* LicenseViewController.xib */; };
@@ -24,11 +23,10 @@
 		F4633A071F2DE62400BE0D7B /* OctNumeralSystemController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4633A061F2DE62400BE0D7B /* OctNumeralSystemController.m */; };
 		F4633A0A1F2DFB5A00BE0D7B /* HexNumeralSystemController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4633A091F2DFB5900BE0D7B /* HexNumeralSystemController.m */; };
 		F4633A0D1F2DFC4700BE0D7B /* DecNumeralSystemController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4633A0C1F2DFC4700BE0D7B /* DecNumeralSystemController.m */; };
+		F404C8D31F1BB165008E449B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = F404C8D21F1BB165008E449B /* Constants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9619AA891EEFC631001F2EC1 /* CalculatorNotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalculatorNotificationController.h; path = ../CalculatorNotificationController.h; sourceTree = "<group>"; };
-		9619AA8A1EEFC631001F2EC1 /* CalculatorNotificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalculatorNotificationController.m; path = ../CalculatorNotificationController.m; sourceTree = "<group>"; };
 		962B6D2A1EE75D0A001B402C /* CalculatorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorModel.h; sourceTree = "<group>"; };
 		962B6D2B1EE75D0A001B402C /* CalculatorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorModel.m; sourceTree = "<group>"; };
 		9A21DA511ED3807D0013C23C /* LicenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LicenseViewController.h; path = ../LicenseViewController.h; sourceTree = "<group>"; };
@@ -58,6 +56,8 @@
 		F4633A0B1F2DFC4700BE0D7B /* DecNumeralSystemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecNumeralSystemController.h; sourceTree = "<group>"; };
 		F4633A0C1F2DFC4700BE0D7B /* DecNumeralSystemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DecNumeralSystemController.m; sourceTree = "<group>"; };
 		F4633A101F2E43D800BE0D7B /* NumeralSystemProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NumeralSystemProtocol.h; path = ../NumeralSystemProtocol.h; sourceTree = "<group>"; };
+		F404C8D11F1BB165008E449B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		F404C8D21F1BB165008E449B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,12 +101,12 @@
 				F4633A091F2DFB5900BE0D7B /* HexNumeralSystemController.m */,
 				F4633A0B1F2DFC4700BE0D7B /* DecNumeralSystemController.h */,
 				F4633A0C1F2DFC4700BE0D7B /* DecNumeralSystemController.m */,
-				9619AA891EEFC631001F2EC1 /* CalculatorNotificationController.h */,
-				9619AA8A1EEFC631001F2EC1 /* CalculatorNotificationController.m */,
 				9ABC8CC81EC86BDF00FB7A08 /* AppDelegate.h */,
 				9ABC8CC91EC86BDF00FB7A08 /* AppDelegate.m */,
 				9ABC8CCB1EC86BDF00FB7A08 /* ViewController.h */,
 				9ABC8CCC1EC86BDF00FB7A08 /* ViewController.m */,
+				F404C8D11F1BB165008E449B /* Constants.h */,
+				F404C8D21F1BB165008E449B /* Constants.m */,
 				962B6D2A1EE75D0A001B402C /* CalculatorModel.h */,
 				962B6D2B1EE75D0A001B402C /* CalculatorModel.m */,
 				9A21DA511ED3807D0013C23C /* LicenseViewController.h */,
@@ -212,8 +212,8 @@
 				F4633A0D1F2DFC4700BE0D7B /* DecNumeralSystemController.m in Sources */,
 				F4633A071F2DE62400BE0D7B /* OctNumeralSystemController.m in Sources */,
 				9ABC8CCA1EC86BDF00FB7A08 /* AppDelegate.m in Sources */,
+				F404C8D31F1BB165008E449B /* Constants.m in Sources */,
 				9A655E521ECDB8F0006DC52E /* AboutViewController.m in Sources */,
-				9619AA8B1EEFC631001F2EC1 /* CalculatorNotificationController.m in Sources */,
 				F4633A0A1F2DFB5A00BE0D7B /* HexNumeralSystemController.m in Sources */,
 				9ABC8CC71EC86BDF00FB7A08 /* main.m in Sources */,
 				962B6D2C1EE75D0A001B402C /* CalculatorModel.m in Sources */,

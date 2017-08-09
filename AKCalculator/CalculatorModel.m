@@ -14,11 +14,14 @@
 
 @implementation CalculatorModel
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+// change sign of number to opposite
+- (CGFloat)changeSign:(UILabel *)label {
+    CGFloat floatValue = ([label.text floatValue]) ? [label.text floatValue] * (-1) : 0;
+
+    return floatValue;
 }
 
-- (CGFloat)performOperation:(CGFloat)operand {
+- (CGFloat)performOperationWithOperand:(CGFloat)operand {
     CGFloat value = self.firstOperand;
     NSArray *operations = @[@"+", @"-", @"*", @"/", @"%", @"\u221A"];
     switch ([operations indexOfObject:self.previousOperation]) {
@@ -61,6 +64,13 @@
     }
     self.firstOperand = value;
     return value;
+}
+
+- (void)catchResultValueChanges {
+    SEL selector = @selector(handleResultValueChanges:);
+    if (self.delegate && [self.delegate respondsToSelector:selector]) {
+        [self.delegate handleResultValueChanges:self];
+    }
 }
 
 - (void)dealloc {

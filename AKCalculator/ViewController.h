@@ -8,14 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CalculatorModel.h"
-#import "CalculatorNotificationController.h"
+
 @class NumeralSystemController;
 
-@interface ViewController : UIViewController<CalculatorNotificationControllerDelegate>
-{
-    BOOL isTypingNumber;
-    BOOL isResultButtonClicked;
-}
+@interface ViewController : UIViewController<CalculatorModelDelegate>
 
 @property (retain, nonatomic) NSDictionary *numSystemButtonsNames;
 @property (retain, nonatomic) IBOutlet UILabel *decResultLabel;
@@ -27,23 +23,17 @@
 @property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *numeralSystemButtons;
 @property (retain, nonatomic) IBOutletCollection(UILabel) NSArray *numSystemResultLabelsCollection;
 @property (retain, nonatomic) IBOutlet UIButton *clearButton;
-@property (retain, nonatomic) IBOutlet UIButton *dotButton;
 @property (retain, nonatomic) IBOutlet UIButton *sqrtUIButton;
 @property (retain, nonatomic) IBOutlet UIButton *plusMinusUIButton;
-@property (retain, nonatomic) IBOutlet UIButton *addUIButton;
-@property (retain, nonatomic) IBOutlet UIButton *subUIButton;
-@property (retain, nonatomic) IBOutlet UIButton *divUIButton;
-@property (retain, nonatomic) IBOutlet UIButton *multUIButton;
-@property (retain, nonatomic) IBOutlet UIButton *modUIButton;
-@property (retain, nonatomic) IBOutlet UIButton *resultUIButton;
 @property (retain, nonatomic) CalculatorModel *model;
 @property (retain, nonatomic) NumeralSystemController *numSystemControllerObject;
 @property (retain, nonatomic) IBOutlet UIStackView *operationsMovableUIStackView;
 @property (retain, nonatomic) IBOutlet UIStackView *centralButtonsBlockUIStackView;
 @property (assign, nonatomic) CGRect operationsMovableUIStackViewFrame;
 @property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *operationsCollectionButtons;
+@property (assign, nonatomic) BOOL isTypingNumber;
+@property (assign, nonatomic) BOOL isResultButtonClicked;
 
 - (IBAction)numSystemButtonTapped:(id)sender;
 
 @end
-

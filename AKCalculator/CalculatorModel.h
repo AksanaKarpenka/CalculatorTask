@@ -8,14 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CalculatorModel : UIViewController
+@class CalculatorModel;
+
+@protocol CalculatorModelDelegate <NSObject>
+
+- (void)handleResultValueChanges:(CalculatorModel *)model;
+
+@end
+
+@interface CalculatorModel : NSObject
 
 @property (assign, nonatomic) CGFloat firstOperand;
 @property (assign, nonatomic) CGFloat secondOperand;
 @property (retain, nonatomic) NSString *currentOperation;
 @property (retain, nonatomic) NSString *previousOperation;
-@property (assign, nonatomic) int operationCount;
+@property (assign, nonatomic) int performingOperationStatus;
+@property (assign, nonatomic) id<CalculatorModelDelegate> delegate;
 
-- (CGFloat)performOperation:(CGFloat)operand;
+- (CGFloat)performOperationWithOperand:(CGFloat)operand;
+- (CGFloat)changeSign:(UILabel *)label;
+- (void)catchResultValueChanges;
 
 @end

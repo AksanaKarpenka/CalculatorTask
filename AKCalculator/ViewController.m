@@ -14,6 +14,7 @@
 #import "DecNumeralSystemController.h"
 #import "HexNumeralSystemController.h"
 #import "NumeralSystemController.h"
+#import "Constants.h"
 
 @interface ViewController ()
 
@@ -86,17 +87,18 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
  or appends a new digit to the displayLabelText if it does not
  */
 - (IBAction)digitTapped:(id)sender {
-    if (isResultButtonClicked) {
-        isResultButtonClicked = NO;
+    if (self.isResultButtonClicked) {
+        self.isResultButtonClicked = NO;
     }
     NSString *digit = [sender titleForState:UIControlStateNormal];
     NSString *result;
-    if (isTypingNumber) {
-        result = [NSString stringWithFormat:@"%@%@", self.decResultLabel.text, digit];
+
+    if (self.isTypingNumber) {
+        result = [NSString stringWithFormat:@"%@%@", self.displayLabel.text, digit];
     }
     else {
         result = [NSString stringWithFormat:@"%@", digit];
-        isTypingNumber = YES;
+        self.isTypingNumber = YES;
     }
     NSString *displayLabelText = self.decResultLabel.text;
     
@@ -120,6 +122,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     self.model.secondOperand = 0;
     self.model.operationCount = 0;
     self.numSystemControllerObject.resultLabel = self.decResultLabel;
+    self.model.performingOperationStatus = STATUS_CURRENT_OPERATION_IS_NULL;
     
     [self switchAvailabilityButton:YES];
 }
@@ -193,8 +196,8 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
 
 // all operation buttons except "square root" is handled here
 - (IBAction)opeationButtonTapped:(id)sender {
-    if (isResultButtonClicked) {
-        isResultButtonClicked = NO;
+    if (self.isResultButtonClicked) {
+        self.isResultButtonClicked = NO;
         self.model.secondOperand = 0;
     }
     CGFloat value = 0;
@@ -204,14 +207,15 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     if (!self.model.currentOperation && !self.model.previousOperation) {
         self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
     }
-    if (isTypingNumber) {
-        isTypingNumber = NO;
-        self.model.operationCount++;
+    if (self.isTypingNumber) {
+        self.isTypingNumber = NO;
+        [self setPerformingOperationStatus];
         self.model.currentOperation = [sender currentTitle];
-        if (self.model.operationCount == 2) {
-            self.model.secondOperand = [self.decResultLabel.text floatValue];
+
+        if (self.model.performingOperationStatus == STATUS_PERFORMING_PREVIOUS_OPERATION) {
+            self.model.secondOperand = [self.displayLabel.text floatValue];
             @try {
-                value = [self.model performOperation:self.model.secondOperand];
+                value = [self.model performOperationWithOperand:self.model.secondOperand];
             } @catch (NSException *exception) {
                 [self showExceptionMessageAndClearData:exception];
                 
@@ -219,7 +223,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
             }
             self.model.secondOperand = 0;
             self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
-            self.model.operationCount = 1;
+            self.model.performingOperationStatus = STATUS_WAITING_NEXT_OPERATION;
             [self showResult:value];
         }
     }
@@ -230,34 +234,30 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
 
 // change sign of number to opposite
 - (IBAction)changeSignTapped:(id)sender {
-    if ([self.decResultLabel.text floatValue] == 0) {
-        return;
-    }
-    CGFloat value = [self.decResultLabel.text floatValue] * (-1);
-    [self showResult:value];
+    [self showResult:[self.model changeSign:self.displayLabel]];
 }
 
 // square root operation button is handled here
 - (IBAction)sqrtOperationTapped:(id)sender {
     CGFloat value = 0;
-    self.model.operationCount++;
+    [self setPerformingOperationStatus];
     
     @try {
-        if (self.model.operationCount == 2) {
-            if (isTypingNumber) {
-                value = [self.model performOperation:[self.decResultLabel.text floatValue]];
+        if (self.model.performingOperationStatus == STATUS_PERFORMING_PREVIOUS_OPERATION) {
+            if (self.isTypingNumber) {
+                value = [self.model performOperationWithOperand:[self.displayLabel.text floatValue]];
                 self.model.firstOperand = value;
             }
             self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
-            value = [self.model performOperation:0];
-            self.model.operationCount = 1;
+            value = [self.model performOperationWithOperand:0];
+            self.model.performingOperationStatus = STATUS_WAITING_NEXT_OPERATION;
         }
         else {
             self.model.firstOperand = [self.decResultLabel.text floatValue];
             self.model.currentOperation = self.model.previousOperation = [sender currentTitle];
-            value = [self.model performOperation:0];
+            value = [self.model performOperationWithOperand:0];
         }
-        isTypingNumber = NO;
+        self.isTypingNumber = NO;
     } @catch (NSException *exception) {
         [self showExceptionMessageAndClearData:exception];
         
@@ -268,14 +268,14 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
 
 // equals sign is handled here
 - (IBAction)resultButtonTapped:(id)sender {
-    isResultButtonClicked = YES;
+    self.isResultButtonClicked = YES;
     CGFloat value = 0;
     @try {
-        if (isTypingNumber) {
-            isTypingNumber = NO;
-            if(self.model.operationCount == 1) {
-                self.model.secondOperand = [self.decResultLabel.text floatValue];
-                value = [self.model performOperation:self.model.secondOperand];
+        if (self.isTypingNumber) {
+            self.isTypingNumber = NO;
+            if(self.model.performingOperationStatus == STATUS_WAITING_NEXT_OPERATION) {
+                self.model.secondOperand = [self.displayLabel.text floatValue];
+                value = [self.model performOperationWithOperand:self.model.secondOperand];
                 [self showResult:value];
             }
         }
@@ -283,7 +283,7 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
             if (!self.model.secondOperand) {
                 self.model.secondOperand = self.model.firstOperand;
             }
-            value = [self.model performOperation:self.model.secondOperand];
+            value = [self.model performOperationWithOperand:self.model.secondOperand];
             self.model.firstOperand = value;
             [self showResult:value];
         }
@@ -297,17 +297,16 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
     NSNumberFormatter *formatDecimal = [[NSNumberFormatter alloc] init];
     [formatDecimal setNumberStyle:NSNumberFormatterDecimalStyle];
     [formatDecimal setMaximumFractionDigits:6];
-    self.decResultLabel.text = [NSString stringWithFormat:@"%@", [formatDecimal stringFromNumber:@(value)]];
 
-    CalculatorNotificationController *controller = [[CalculatorNotificationController alloc]init];
-    controller.delegate = self;
-    [controller catchResultValueChanges];
-    [controller release];
+    self.displayLabel.text = [NSString stringWithFormat:@"%@", [formatDecimal stringFromNumber:@(value)]];
+    self.model.delegate = self;
+    [self.model catchResultValueChanges];
+
     [formatDecimal release];
 }
 
 // realization of protocol method
-- (void)handleResultValueChanges:(CalculatorNotificationController *)controller {
+- (void)handleResultValueChanges:(CalculatorModel *)model {
     NSLog(@"Result was changed.");
 }
 
@@ -400,21 +399,21 @@ const int NUM_SYSTEM_HEX_BUTTON = 3;
         valFloat /= 2;
     }
     self.binResultLabel.text = [NSString stringWithFormat:@"%@", str];
+
+- (void)setPerformingOperationStatus {
+    if (self.model.performingOperationStatus == STATUS_CURRENT_OPERATION_IS_NULL) {
+        self.model.performingOperationStatus = STATUS_WAITING_NEXT_OPERATION;
+    } else if (self.model.performingOperationStatus == STATUS_WAITING_NEXT_OPERATION) {
+        self.model.performingOperationStatus = STATUS_PERFORMING_PREVIOUS_OPERATION;
+    }
 }
 
 - (void)dealloc {
     [_decResultLabel release];
     [_digitCollectionButtons release];
     [_clearButton release];
-    [_dotButton release];
     [_sqrtUIButton release];
     [_plusMinusUIButton release];
-    [_addUIButton release];
-    [_subUIButton release];
-    [_divUIButton release];
-    [_multUIButton release];
-    [_modUIButton release];
-    [_resultUIButton release];
     [_model release];
     [_operationsMovableUIStackView release];
     [_centralButtonsBlockUIStackView release];
