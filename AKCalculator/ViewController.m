@@ -94,15 +94,14 @@
 
 // disable(enable) all buttons except clear button in case of arithmetic error
 - (void)switchAvailabilityButton:(BOOL)enable {
-    for (UIControl *subview in [[self.view viewWithTag:1] subviews]) {
-        if ([subview isMemberOfClass:[UIButton class]]) {
-            subview.enabled = enable;
-            UIColor *buttonTitleColor = (enable) ? [UIColor blackColor] : [UIColor grayColor];
-            [subview setTitleColor:buttonTitleColor forState:UIControlStateNormal];
-        }
+    NSMutableArray *allButtonsMutableArray = [NSMutableArray array];
+    [allButtonsMutableArray addObjectsFromArray:self.digitCollectionButtons];
+    [allButtonsMutableArray addObjectsFromArray:self.operationsCollectionButtons];
+    for (UIButton *button in allButtonsMutableArray) {
+        button.enabled = enable;
+        UIColor *buttonTitleColor = (enable) ? [UIColor blackColor] : [UIColor grayColor];
+        [button setTitleColor:buttonTitleColor forState:UIControlStateNormal];
     }
-    self.clearButton.enabled = YES;
-    [self.clearButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 }
 
 /*
@@ -256,6 +255,27 @@
     [licenseViewController release];
 }
 
+// move buttons group to other location after orientation is changed
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    if (size.width > size.height) {
+        [UIView animateWithDuration:0.5f
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{[self.centralButtonsBlockUIStackView insertArrangedSubview:self.operationsMovableUIStackView atIndex:0];}
+                         completion:^(BOOL finished) {}
+         ];
+        NSLog(@"Part1");
+    } else {
+        [UIView animateWithDuration:0.5f
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{[self.centralButtonsBlockUIStackView insertArrangedSubview:self.operationsMovableUIStackView atIndex:[[self.centralButtonsBlockUIStackView subviews] count] - 1];}
+                         completion:^(BOOL finished) {}
+         ];
+    }
+}
+
 - (void)setPerformingOperationStatus {
     if (self.model.performingOperationStatus == STATUS_CURRENT_OPERATION_IS_NULL) {
         self.model.performingOperationStatus = STATUS_WAITING_NEXT_OPERATION;
@@ -271,6 +291,9 @@
     [_sqrtUIButton release];
     [_plusMinusUIButton release];
     [_model release];
+    [_operationsMovableUIStackView release];
+    [_centralButtonsBlockUIStackView release];
+    [_operationsCollectionButtons release];
     [super dealloc];
 }
 

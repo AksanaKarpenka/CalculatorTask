@@ -20,23 +20,23 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WKB-s2-fqc">
-                    <rect key="frame" x="284" y="39" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WKB-s2-fqc">
+                    <rect key="frame" x="321" y="39" width="39" height="30"/>
                     <state key="normal" title="Close"/>
                     <connections>
                         <action selector="closeLicenseWindow:" destination="-1" eventType="touchUpInside" id="W3n-gU-dhZ"/>
                     </connections>
                 </button>
-                <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oe7-Uf-mug">
-                    <rect key="frame" x="24" y="140" width="335" height="498"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe7-Uf-mug">
+                    <rect key="frame" x="0.0" y="149" width="375" height="518"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </webView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Условия использования и лицензии" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYL-C7-3VJ">
-                    <rect key="frame" x="0.0" y="77" width="375" height="42"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Условия использования и лицензии" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYL-C7-3VJ">
+                    <rect key="frame" x="0.0" y="84" width="375" height="50"/>
                     <color key="backgroundColor" red="0.80000001190000003" green="1" blue="0.40000000600000002" alpha="0.69801476883561642" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="RCs-Qq-U0p"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -45,6 +45,17 @@
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="WKB-s2-fqc" secondAttribute="trailing" constant="15" id="7oi-Qw-Yq5"/>
+                <constraint firstAttribute="trailing" secondItem="Oe7-Uf-mug" secondAttribute="trailing" id="Deg-oK-H7k"/>
+                <constraint firstItem="FYL-C7-3VJ" firstAttribute="top" secondItem="WKB-s2-fqc" secondAttribute="bottom" constant="15" id="N0n-tO-rk6"/>
+                <constraint firstAttribute="bottom" secondItem="Oe7-Uf-mug" secondAttribute="bottom" id="NmR-w1-nrI"/>
+                <constraint firstItem="FYL-C7-3VJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="a0A-n6-1pk"/>
+                <constraint firstItem="Oe7-Uf-mug" firstAttribute="top" secondItem="FYL-C7-3VJ" secondAttribute="bottom" constant="15" id="gg8-2t-aYX"/>
+                <constraint firstItem="WKB-s2-fqc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="39" id="otp-Av-q7I"/>
+                <constraint firstItem="Oe7-Uf-mug" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="p6z-G9-O4G"/>
+                <constraint firstAttribute="trailing" secondItem="FYL-C7-3VJ" secondAttribute="trailing" id="wRt-bD-Vnm"/>
+            </constraints>
             <point key="canvasLocation" x="24.5" y="52.5"/>
         </view>
     </objects>
